@@ -29,4 +29,5 @@ public class User {
   private int role;
   private boolean isPaidUser;
   private int accessLevel;
+  private int managerId;
 }

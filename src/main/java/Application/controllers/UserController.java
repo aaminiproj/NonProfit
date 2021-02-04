@@ -51,20 +51,20 @@ public class UserController {
       user = userRepository.findById(userId).get();
       if (user.isPaidUser()) {
         return new ResponseEntity<>(userRepository.save(User.builder().email(email).username(username).password(password).phoneNumber(phoneNumber)
-                .role(GENERAL).isPaidUser(true).position(position).accessLevel(accessLevel).build()),HttpStatus.CREATED);
+                .role(GENERAL).isPaidUser(true).position(position).accessLevel(accessLevel).managerId(userId).build()),HttpStatus.CREATED);
       }
       if (userRepository.getUserCountFromSuperUser(userId) < 4) {
 
         return new ResponseEntity<>( userRepository.save(User.builder().email(email).username(username).password(password).phoneNumber(phoneNumber)
-                .role(GENERAL).isPaidUser(false).position(position).accessLevel(accessLevel).build()),HttpStatus.CREATED);
+                .role(GENERAL).isPaidUser(false).position(position).accessLevel(accessLevel).managerId(userId).build()),HttpStatus.CREATED);
       }
       else
-         return new ResponseEntity<String>("Please pay us, you already have 5 users", HttpStatus.FORBIDDEN);
+         return new ResponseEntity<>("Please pay us, you already have 5 users", HttpStatus.FORBIDDEN);
       }
 
 
     return new ResponseEntity<>(userRepository.save(User.builder().email(email).username(username).password(password).phoneNumber(phoneNumber)
-            .role(ADMIN).isPaidUser(false).position(position).accessLevel(ACCESS_LEVEL_EVERYONE).build()), HttpStatus.CREATED);
+            .role(ADMIN).isPaidUser(false).position(position).accessLevel(ACCESS_LEVEL_EVERYONE).managerId(0).build()), HttpStatus.CREATED);
   }
 
 
